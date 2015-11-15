@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 
 namespace FortisCollections.Toolcore.Publish.Runner
 {
@@ -26,10 +27,16 @@ namespace FortisCollections.Toolcore.Publish.Runner
 			{
 				maxRetries = options.MaxRetries;
 			}
+
+			Thread.Sleep(TimeSpan.FromSeconds(30));
+
+			RunPublish(options.SitecoreUrl, options.SourceDatabaseName, options.TargetDatabaseNames, options.LanguageNames);
 		}
 
 		static void RunPublish(string sitecoreUrl, string sourceDatabaseName, string[] targetDatabaseNames, string[] languageNames)
 		{
+			var targets = targetDatabaseNames ?? new string[] { };
+			var languages = languageNames ?? new string[] { };
 			var hostUrl = sitecoreUrl.LastIndexOf("/") != sitecoreUrl.Length - 1 ? sitecoreUrl + "/" : sitecoreUrl;
 			var serviceUrl = string.Concat(hostUrl, Properties.Settings.Default.ServiceFolder, Properties.Settings.Default.ServiceFileName);
 
@@ -41,8 +48,8 @@ namespace FortisCollections.Toolcore.Publish.Runner
 				WriteMessage("Initializing publishing process");
 				WriteMessage(string.Format("	Sitecore URL: {0}", serviceUrl));
 				WriteMessage(string.Format("	Source: {0}", sourceDatabaseName));
-				WriteMessage(string.Format("	Targets: {0}", targetDatabaseNames));
-				WriteMessage(string.Format("	Languages: {0}", languageNames));
+				WriteMessage(string.Format("	Targets: {0}", targets.Any() ? targets.ToString() : "All"));
+				WriteMessage(string.Format("	Languages: {0}", languages.Any() ? languages.ToString() : "All"));
 
 				var id = string.Empty;
 				var success = false;
@@ -62,7 +69,7 @@ namespace FortisCollections.Toolcore.Publish.Runner
 							WriteMessage("Starting publishing process | Max Timeout: {0}m {1}s | Max Retries: {2}", timeout.Minutes, timeout.Seconds, maxRetries);
 						}
 
-						id = publishingService.Publish(sourceDatabaseName, targetDatabaseNames, languageNames);
+						id = publishingService.Publish(sourceDatabaseName, targets, languages);
 						
 						success = true;
 					}
