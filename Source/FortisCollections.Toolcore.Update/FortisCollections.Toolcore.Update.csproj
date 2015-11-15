@@ -52,6 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivePackageInstallTracker.cs" />
+    <Compile Include="IActivePackageInstallTracker.cs" />
     <Compile Include="IPackageInstaller.cs" />
     <Compile Include="IPackageInstallError.cs" />
     <Compile Include="IPackageInstallInfo.cs" />

@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FortisCollections.Toolcore"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FortisCollections.Toolcore.Update", "FortisCollections.Toolcore.Update\FortisCollections.Toolcore.Update.csproj", "{DE3209D7-FEEC-451D-B633-7CB8D1537B0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FortisCollections.Toolcore.Update.Service", "FortisCollections.Toolcore.Update.Service\FortisCollections.Toolcore.Update.Service.csproj", "{EB17ED5D-EBEB-44D3-8322-45DB6FFF02CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FortisCollections.Toolcore.Update.Runner", "FortisCollections.Toolcore.Update.Runner\FortisCollections.Toolcore.Update.Runner.csproj", "{F03B9173-2E8B-4B6A-BD74-E09140DAB557}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{DE3209D7-FEEC-451D-B633-7CB8D1537B0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE3209D7-FEEC-451D-B633-7CB8D1537B0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE3209D7-FEEC-451D-B633-7CB8D1537B0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB17ED5D-EBEB-44D3-8322-45DB6FFF02CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB17ED5D-EBEB-44D3-8322-45DB6FFF02CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB17ED5D-EBEB-44D3-8322-45DB6FFF02CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB17ED5D-EBEB-44D3-8322-45DB6FFF02CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F03B9173-2E8B-4B6A-BD74-E09140DAB557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F03B9173-2E8B-4B6A-BD74-E09140DAB557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F03B9173-2E8B-4B6A-BD74-E09140DAB557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F03B9173-2E8B-4B6A-BD74-E09140DAB557}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

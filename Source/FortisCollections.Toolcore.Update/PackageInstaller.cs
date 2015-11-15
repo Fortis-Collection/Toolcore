@@ -5,21 +5,23 @@ namespace FortisCollections.Toolcore.Update
 {
 	public class PackageInstaller : IPackageInstaller
 	{
-		protected IPackageInstallTracker Tracker;
-		protected readonly IPackageInstallTrackerFactory TrackerFactory;
+		protected readonly IActivePackageInstallTracker ActiveTracker;
+        protected readonly IPackageInstallTrackerFactory TrackerFactory;
 		protected readonly IPackageInstallLoggerFactory LoggerFactory;
 
 		public PackageInstaller(
+			IActivePackageInstallTracker activeTracker,
 			IPackageInstallTrackerFactory trackerFactory,
 			IPackageInstallLoggerFactory loggerFactory)
 		{
+			ActiveTracker = activeTracker;
 			TrackerFactory = trackerFactory;
 			LoggerFactory = loggerFactory;
 		}
 
 		public IPackageInstallProgress CheckProgress()
 		{
-			if (Tracker == null)
+			if (ActiveTracker.Tracker == null)
 			{
 				return new PackageInstallProgress
 				{
@@ -32,8 +34,8 @@ namespace FortisCollections.Toolcore.Update
 
 			return new PackageInstallProgress
 			{
-				LastCommandProcessed = Tracker.CommandsProcessed,
-				PercentageComplete = Tracker.PercentageComplete
+				LastCommandProcessed = ActiveTracker.Tracker.CommandsProcessed,
+				PercentageComplete = ActiveTracker.Tracker.PercentageComplete
 			};
 		}
 
@@ -52,8 +54,8 @@ namespace FortisCollections.Toolcore.Update
 				};
 			}
 
-			Tracker = TrackerFactory.Create(packageMetaData.CommandsCount);
-			var logger = LoggerFactory.Create(Tracker);
+			var tracker = TrackerFactory.Create(packageMetaData.CommandsCount);
+			var logger = LoggerFactory.Create(tracker);
 			var packageInstallationInfo = new PackageInstallationInfo
 			{
 				Action = Sitecore.Update.Installer.Utils.UpgradeAction.Upgrade,
@@ -66,7 +68,7 @@ namespace FortisCollections.Toolcore.Update
 
 			installer.ExecutePostInstallationInstructions(packageInstallationInfo.Path, historyPath, packageInstallationInfo.Mode, packageMetaData, logger, ref entries);
 
-			Tracker = null;
+			ActiveTracker.Tracker = null;
 
 			return new PackageInstallInfo
 			{
