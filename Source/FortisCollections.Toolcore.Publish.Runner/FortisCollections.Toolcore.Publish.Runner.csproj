@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F03B9173-2E8B-4B6A-BD74-E09140DAB557}</ProjectGuid>
+    <ProjectGuid>{CDA085C6-E2EA-4D94-BF20-A7108A0C0683}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FortisCollections.Toolcore.Update.Runner</RootNamespace>
-    <AssemblyName>Update</AssemblyName>
+    <RootNamespace>FortisCollections.Toolcore.Publish.Runner</RootNamespace>
+    <AssemblyName>Publishing</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -56,7 +56,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Web References\PackageInstall\Reference.cs">
+    <Compile Include="Web References\Publishing\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
@@ -69,11 +69,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Web References\PackageInstall\PackageInstall.wsdl" />
-    <None Include="Web References\PackageInstall\Progress.datasource">
+    <None Include="Web References\Publishing\Progress.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
-    <None Include="Web References\PackageInstall\Reference.map">
+    <None Include="Web References\Publishing\Publishing.wsdl" />
+    <None Include="Web References\Publishing\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -82,20 +82,20 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://scpackageinstaller/PackageInstall.asmx">
+    <WebReferenceUrl Include="http://scpackageinstaller/Publishing.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
-      <RelPath>Web References\PackageInstall\</RelPath>
-      <UpdateFromURL>http://scpackageinstaller/PackageInstall.asmx</UpdateFromURL>
+      <RelPath>Web References\Publishing\</RelPath>
+      <UpdateFromURL>http://scpackageinstaller/Publishing.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
-      <CachedSettingsPropName>FortisCollections_Toolcore_Update_Runner_PackageInstall_PackageInstall</CachedSettingsPropName>
+      <CachedSettingsPropName>Publishing_Publishing_Publishing</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Web References\PackageInstall\PackageInstall.disco" />
+    <None Include="Web References\Publishing\Publishing.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

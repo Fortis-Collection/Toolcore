@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FortisCollections.Toolcore.Publish.Runner.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ServiceFolder" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ServiceFileName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Publishing.asmx</Value>
+    </Setting>
+    <Setting Name="MaxRetries" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="Timeout" Type="System.TimeSpan" Scope="Application">
+      <Value Profile="(Default)">00:02:00</Value>
+    </Setting>
+    <Setting Name="RetryInterval" Type="System.TimeSpan" Scope="Application">
+      <Value Profile="(Default)">00:00:05</Value>
+    </Setting>
+    <Setting Name="Publishing_Publishing_Publishing" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://scpackageinstaller/Publishing.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

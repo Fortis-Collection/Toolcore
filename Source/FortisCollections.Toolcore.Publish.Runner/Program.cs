@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace FortisCollections.Toolcore.Update.Runner
+namespace FortisCollections.Toolcore.Publish.Runner
 {
 	class Program
 	{
@@ -26,22 +26,25 @@ namespace FortisCollections.Toolcore.Update.Runner
 			{
 				maxRetries = options.MaxRetries;
 			}
-
-			RunPackageInstall(options.PackagePath, options.SitecoreUrl);
 		}
 
-		static void RunPackageInstall(string packagePath, string sitecoreUrl)
+		static void RunPublish(string sitecoreUrl, string sourceDatabaseName, string[] targetDatabaseNames, string[] languageNames)
 		{
 			var hostUrl = sitecoreUrl.LastIndexOf("/") != sitecoreUrl.Length - 1 ? sitecoreUrl + "/" : sitecoreUrl;
 			var serviceUrl = string.Concat(hostUrl, Properties.Settings.Default.ServiceFolder, Properties.Settings.Default.ServiceFileName);
 
-			using (var packageInstallService = new PackageInstall.PackageInstall())
+			using (var publishingService = new Publishing.Publishing())
 			{
-				packageInstallService.Url = serviceUrl;
-				packageInstallService.Timeout = Convert.ToInt32(timeout.TotalMilliseconds);
+				publishingService.Url = serviceUrl;
+				publishingService.Timeout = Convert.ToInt32(timeout.TotalMilliseconds);
 
-				WriteMessage("Initializing package install process | Package: {0} | Sitecore URL: {1}", packagePath, serviceUrl);
+				WriteMessage("Initializing publishing process");
+				WriteMessage(string.Format("	Sitecore URL: {0}", serviceUrl));
+				WriteMessage(string.Format("	Source: {0}", sourceDatabaseName));
+				WriteMessage(string.Format("	Targets: {0}", targetDatabaseNames));
+				WriteMessage(string.Format("	Languages: {0}", languageNames));
 
+				var id = string.Empty;
 				var success = false;
 				var exceptions = new List<Exception>();
 
@@ -51,27 +54,16 @@ namespace FortisCollections.Toolcore.Update.Runner
 					{
 						if (retry > 0)
 						{
-							WriteMessage("Waiting {0}m {1}s before attempting install again.", retryInterval.Minutes, retryInterval.Seconds);
+							WriteMessage("Waiting {0}m {1}s before attempting publishing again.", retryInterval.Minutes, retryInterval.Seconds);
 							Thread.Sleep(retryInterval);
 						}
 						else
 						{
-							WriteMessage("Starting package installation | Max Timeout: {0}m {1}s | Max Retries: {2}", timeout.Minutes, timeout.Seconds, maxRetries);
+							WriteMessage("Starting publishing process | Max Timeout: {0}m {1}s | Max Retries: {2}", timeout.Minutes, timeout.Seconds, maxRetries);
 						}
 
-						packageInstallService.InstallPackageAsync(packagePath);
-
-						var progress = packageInstallService.Check();
-
-						WriteMessage("Package install progress {0}%", progress.PercentageComplete);
-
-						while (progress.PercentageComplete < 100)
-						{
-							Thread.Sleep(TimeSpan.FromSeconds(5));
-							progress = packageInstallService.Check();
-							WriteMessage("Package install progress {0}%", progress.PercentageComplete);
-						}
-
+						id = publishingService.Publish(sourceDatabaseName, targetDatabaseNames, languageNames);
+						
 						success = true;
 					}
 					catch (TimeoutException ex)
@@ -81,7 +73,7 @@ namespace FortisCollections.Toolcore.Update.Runner
 					}
 					catch (Exception ex)
 					{
-						WriteMessage("An error has ocurred while trying to install the update package. Check the Sitecore log file for any exceptions.");
+						WriteMessage("An error has ocurred while trying to publish. Check the Sitecore log file for any exceptions.");
 						exceptions.Add(ex);
 						break;
 					}
@@ -92,7 +84,24 @@ namespace FortisCollections.Toolcore.Update.Runner
 					Environment.Exit(103);
 				}
 
-				WriteMessage("Update package installed successfully.");
+				var status = publishingService.Check(id);
+				var message = string.Empty;
+
+				while (!status.Complete)
+				{
+					if (!message.Equals(status.Message))
+					{
+						message = status.Message;
+
+						WriteMessage(status.Message);
+					}
+
+					Thread.Sleep(1500);
+
+					status = publishingService.Check(id);
+				}
+
+				WriteMessage(status.Message);
 			}
 		}
 

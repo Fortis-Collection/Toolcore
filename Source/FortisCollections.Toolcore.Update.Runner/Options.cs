@@ -6,9 +6,9 @@ namespace FortisCollections.Toolcore.Update.Runner
 	{
 		[Option('p', "packagePath", Required = true)]
 		public string PackagePath { get; set; }
-		[Option('s', "sitecoreUrl", Required = true)]
+		[Option('u', "sitecoreUrl", Required = true)]
 		public string SitecoreUrl { get; set; }
-		[Option('t', "timeout")]
+		[Option('o', "timeout")]
 		public int Timeout { get; set; }
 		[Option('m', "maxRetries")]
 		public int MaxRetries { get; set; }
