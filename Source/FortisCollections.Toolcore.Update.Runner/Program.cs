@@ -63,12 +63,27 @@ namespace FortisCollections.Toolcore.Update.Runner
 
 						var progress = packageInstallService.Check();
 
+                        // The web service will sometimes report 0% complete instead of 100% shortly after a package installation finishes.
+                        // Since we only check the progress once every 5 seconds, it is possible we'll miss the window where the service 
+                        // is reporting 100% complete.  This would result in a non-terminating loop.
+                        // Therefore, we also track the maximum completion percentage seen thus far.
+                        // If the current completion percentage ever drops to 0, but we've already seen higher percentages, 
+                        // we know the installation is actually complete.
+                        var maximumProgress = progress.PercentageComplete;
+
 						WriteMessage("Package install progress {0}%", progress.PercentageComplete);
 
-						while (progress.PercentageComplete < 100)
+                        // Stop if we see 100% complete, or if we see PercentageComplete at 0% with a non-zero MaximumProgress.
+						while (progress.PercentageComplete < 100 && !(Math.Abs(progress.PercentageComplete) < 0.1 && maximumProgress > 0))
 						{
 							Thread.Sleep(TimeSpan.FromSeconds(5));
 							progress = packageInstallService.Check();
+                            
+						    if (progress.PercentageComplete > maximumProgress)
+						    {
+						        maximumProgress = progress.PercentageComplete;
+						    }
+
 							WriteMessage("Package install progress {0}%", progress.PercentageComplete);
 						}
 
