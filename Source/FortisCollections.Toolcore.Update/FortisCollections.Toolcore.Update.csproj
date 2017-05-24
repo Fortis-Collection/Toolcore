@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FortisCollections.Toolcore.Update</RootNamespace>
     <AssemblyName>FortisCollections.Toolcore.Update</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,17 +31,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>..\..\Libraries\Sitecore.Kernel.dll</HintPath>
+    <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Kernel.NoReferences.8.2.170407\lib\NET452\Sitecore.Kernel.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.Logging">
-      <HintPath>..\..\Libraries\Sitecore.Logging.dll</HintPath>
+    <Reference Include="Sitecore.Logging, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Logging.NoReferences.8.2.170407\lib\NET452\Sitecore.Logging.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.Update">
-      <HintPath>..\..\Libraries\Sitecore.Update.dll</HintPath>
+    <Reference Include="Sitecore.Update, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Update.NoReferences.8.2.170407\lib\NET452\Sitecore.Update.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.Zip">
-      <HintPath>..\..\Libraries\Sitecore.Zip.dll</HintPath>
+    <Reference Include="Sitecore.Zip, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Zip.NoReferences.8.2.170407\lib\NET452\Sitecore.Zip.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,6 +78,9 @@
     <Compile Include="PackageInstallTrackerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreLoggerFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
