@@ -1,4 +1,6 @@
-﻿using Sitecore.Update;
+﻿using System;
+using System.Threading;
+using Sitecore.Update;
 using Sitecore.Update.Installer;
 
 namespace FortisCollections.Toolcore.Update
@@ -56,25 +58,60 @@ namespace FortisCollections.Toolcore.Update
 
 			var tracker = TrackerFactory.Create(packageMetaData.CommandsCount);
 			var logger = LoggerFactory.Create(tracker);
-			var packageInstallationInfo = new PackageInstallationInfo
+			try
 			{
-				Action = Sitecore.Update.Installer.Utils.UpgradeAction.Upgrade,
-				Mode = Sitecore.Update.Utils.InstallMode.Install,
-				Path = path
-			};
-			var historyPath = string.Empty;
-			var entries = UpdateHelper.Install(packageInstallationInfo, logger, out historyPath);
-			var installer = new DiffInstaller(packageInstallationInfo.Action);
+				logger.Info(string.Format("Beginning update package installation: {0}", path));
 
-			installer.ExecutePostInstallationInstructions(packageInstallationInfo.Path, historyPath, packageInstallationInfo.Mode, packageMetaData, logger, ref entries);
+				var packageInstallationInfo = new PackageInstallationInfo
+				{
+					Action = Sitecore.Update.Installer.Utils.UpgradeAction.Upgrade,
+					Mode = Sitecore.Update.Utils.InstallMode.Install,
+					Path = path
+				};
+				var historyPath = string.Empty;
+				var entries = UpdateHelper.Install(packageInstallationInfo, logger, out historyPath);
+				var installer = new DiffInstaller(packageInstallationInfo.Action);
 
-			ActiveTracker.Tracker = null;
+				installer.ExecutePostInstallationInstructions(packageInstallationInfo.Path, historyPath, packageInstallationInfo.Mode, packageMetaData, logger, ref entries);
 
-			return new PackageInstallInfo
+				ActiveTracker.Tracker = null;
+
+				logger.Info(string.Format("Completed update package installation: {0}", path));
+
+				return new PackageInstallInfo
+				{
+					Id = historyPath,
+					CommandCount = packageMetaData.CommandsCount
+				};
+			}
+			catch (ThreadAbortException ex)
 			{
-				Id = historyPath,
-				CommandCount = packageMetaData.CommandsCount
-			};
+				logger.Error("Update package installation failed.  The application's execution timeout may have been exceeded.  Update /configuration/system.web/httpRuntime/@executionTimeout to increase the timeout.", ex);
+
+				return new PackageInstallInfo
+				{
+					Error = new PackageInstallError
+					{
+						Message = "Installation failed.  The application's execution timeout may have been exceeded.  Check the Sitecore log for details."
+					}
+				};
+			}
+			catch (Exception ex)
+			{
+				logger.Error(string.Format("Update package installation failed: {0}", path), ex);
+
+				return new PackageInstallInfo
+				{
+					Error = new PackageInstallError
+					{
+						Message = "Installation failed.  Check the Sitecore log for details."
+					}
+				};
+			}
+			finally
+			{
+				ActiveTracker.Tracker = null;
+			}
 		}
 	}
 }
