@@ -11,31 +11,6 @@ namespace FortisCollections.Toolcore.Publish.Service
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="sourceDatabaseName"></param>
-		/// <param name="targetNames"></param>
-		/// <param name="languageNames"></param>
-		/// <returns>An ID for checking the progress of the publish</returns>
-		[WebMethod(Description = "Publishes the master database to one or more targets.")]
-		[Obsolete("Use Publish(PublishOptions)")]
-		public string Publish(
-			string sourceDatabaseName,
-			string[] targetNames = null,
-			string[] languageNames = null)
-		{
-			return Publish(new PublishOptions
-			{
-				SourceDatabaseName = sourceDatabaseName,
-				TargetNames = targetNames,
-				LanguageNames = languageNames
-			});
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="sourceDatabaseName"></param>
-		/// <param name="targetNames"></param>
-		/// <param name="languageNames"></param>
 		/// <returns>An ID for checking the progress of the publish</returns>
 		[WebMethod(Description = "Publishes the master database to one or more targets.")]
 		public string Publish(PublishOptions options)
