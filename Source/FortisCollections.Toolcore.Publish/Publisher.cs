@@ -54,6 +54,8 @@ namespace FortisCollections.Toolcore.Publish
 				var publisher = new Sitecore.Publishing.Publisher(publishOptions, languages);
 				var job = publisher.PublishAsync();
 
+				// Add publish to history
+
 				return job.Name;
 			}
 		}

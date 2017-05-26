@@ -15,7 +15,7 @@ namespace FortisCollections.Toolcore.Publish
 
 				if (job == null)
 				{
-					return new PublishProgress { Complete = true, Message = string.Format("Unable to get job with handle {0}", jobName) };
+					return new PublishProgress { Complete = true, Message = string.Format("Unable to find job with handle {0}", jobName) };
 				}
 
 				var status = job.Status;

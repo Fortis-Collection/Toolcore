@@ -54,6 +54,8 @@
     <Compile Include="Publisher.cs" />
     <Compile Include="PublisherOptions.cs" />
     <Compile Include="PublisherTracker.cs" />
+    <Compile Include="PublishHistories.cs" />
+    <Compile Include="PublishHistory.cs" />
     <Compile Include="PublishProgress.cs" />
   </ItemGroup>
   <ItemGroup>
