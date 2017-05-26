@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
+using FortisCollections.Toolcore.Publish.Runner.Publishing;
 
 namespace FortisCollections.Toolcore.Publish.Runner
 {
@@ -14,6 +15,10 @@ namespace FortisCollections.Toolcore.Publish.Runner
 
 		static void Main(string[] args)
 		{
+			WriteMessage("------------------------");
+			WriteMessage("Toolcore - Publish (2.0)");
+			WriteMessage("------------------------");
+
 			var options = new Options();
 			var parser = new Parser(config => config.HelpWriter = Console.Out);
 			var result = parser.ParseArguments(args, options);
@@ -28,15 +33,18 @@ namespace FortisCollections.Toolcore.Publish.Runner
 				maxRetries = options.MaxRetries;
 			}
 
-			Thread.Sleep(TimeSpan.FromSeconds(30));
-
-			RunPublish(options.SitecoreUrl, options.SourceDatabaseName, options.TargetDatabaseNames, options.LanguageNames);
+			RunPublish(options);
 		}
 
-		static void RunPublish(string sitecoreUrl, string sourceDatabaseName, string[] targetDatabaseNames, string[] languageNames)
+		static void RunPublish(Options options)
 		{
-			var targets = targetDatabaseNames ?? new string[] { };
-			var languages = languageNames ?? new string[] { };
+			var sitecoreUrl = options.SitecoreUrl;
+			var targets = options.TargetDatabaseNames ?? new string[] { };
+			var languages = options.LanguageNames ?? new string[] { };
+			var sourceDatabaseName = options.SourceDatabaseName;
+			var deep = options.Deep;
+			var rootItem = options.RootItem;
+			var publishMode = options.PublishMode;
 			var hostUrl = sitecoreUrl.LastIndexOf("/") != sitecoreUrl.Length - 1 ? sitecoreUrl + "/" : sitecoreUrl;
 			var serviceUrl = string.Concat(hostUrl, Properties.Settings.Default.ServiceFolder, Properties.Settings.Default.ServiceFileName);
 
@@ -50,10 +58,22 @@ namespace FortisCollections.Toolcore.Publish.Runner
 				WriteMessage(string.Format("	Source: {0}", sourceDatabaseName));
 				WriteMessage(string.Format("	Targets: {0}", targets.Any() ? targets.ToString() : "All"));
 				WriteMessage(string.Format("	Languages: {0}", languages.Any() ? languages.ToString() : "All"));
+				WriteMessage(string.Format("	Deep: {0}", deep));
+				WriteMessage(string.Format("	Root Item: {0}", rootItem ?? "/sitecore"));
+				WriteMessage(string.Format("	Publish Mode: {0}", publishMode ?? "Smart"));
 
 				var id = string.Empty;
 				var success = false;
 				var exceptions = new List<Exception>();
+				var publishOptions = new PublishOptions
+				{
+					Deep = deep,
+					LanguageNames = languages,
+					PublishMode = publishMode,
+					RootItem = rootItem,
+					SourceDatabaseName = sourceDatabaseName,
+					TargetNames = targets
+				};
 
 				for (int retry = 0; retry < maxRetries && !success; retry++)
 				{
@@ -69,7 +89,7 @@ namespace FortisCollections.Toolcore.Publish.Runner
 							WriteMessage("Starting publishing process | Max Timeout: {0}m {1}s | Max Retries: {2}", timeout.Minutes, timeout.Seconds, maxRetries);
 						}
 
-						id = publishingService.Publish(sourceDatabaseName, targets, languages);
+						id = publishingService.Publish(publishOptions);
 						
 						success = true;
 					}

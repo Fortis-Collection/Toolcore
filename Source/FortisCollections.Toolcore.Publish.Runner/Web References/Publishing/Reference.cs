@@ -23,7 +23,7 @@ namespace FortisCollections.Toolcore.Publish.Runner.Publishing {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="PublishingSoap", Namespace="http://tempuri.org/")]
@@ -79,28 +79,24 @@ namespace FortisCollections.Toolcore.Publish.Runner.Publishing {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/Publish", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string Publish(string sourceDatabaseName, string[] targetNames, string[] languageNames) {
+        public string Publish(PublishOptions options) {
             object[] results = this.Invoke("Publish", new object[] {
-                        sourceDatabaseName,
-                        targetNames,
-                        languageNames});
+                        options});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void PublishAsync(string sourceDatabaseName, string[] targetNames, string[] languageNames) {
-            this.PublishAsync(sourceDatabaseName, targetNames, languageNames, null);
+        public void PublishAsync(PublishOptions options) {
+            this.PublishAsync(options, null);
         }
         
         /// <remarks/>
-        public void PublishAsync(string sourceDatabaseName, string[] targetNames, string[] languageNames, object userState) {
+        public void PublishAsync(PublishOptions options, object userState) {
             if ((this.PublishOperationCompleted == null)) {
                 this.PublishOperationCompleted = new System.Threading.SendOrPostCallback(this.OnPublishOperationCompleted);
             }
             this.InvokeAsync("Publish", new object[] {
-                        sourceDatabaseName,
-                        targetNames,
-                        languageNames}, this.PublishOperationCompleted, userState);
+                        options}, this.PublishOperationCompleted, userState);
         }
         
         private void OnPublishOperationCompleted(object arg) {
@@ -159,7 +155,88 @@ namespace FortisCollections.Toolcore.Publish.Runner.Publishing {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class PublishOptions {
+        
+        private bool deepField;
+        
+        private string[] languageNamesField;
+        
+        private string publishModeField;
+        
+        private string rootItemField;
+        
+        private string sourceDatabaseNameField;
+        
+        private string[] targetNamesField;
+        
+        /// <remarks/>
+        public bool Deep {
+            get {
+                return this.deepField;
+            }
+            set {
+                this.deepField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string[] LanguageNames {
+            get {
+                return this.languageNamesField;
+            }
+            set {
+                this.languageNamesField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string PublishMode {
+            get {
+                return this.publishModeField;
+            }
+            set {
+                this.publishModeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string RootItem {
+            get {
+                return this.rootItemField;
+            }
+            set {
+                this.rootItemField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SourceDatabaseName {
+            get {
+                return this.sourceDatabaseNameField;
+            }
+            set {
+                this.sourceDatabaseNameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string[] TargetNames {
+            get {
+                return this.targetNamesField;
+            }
+            set {
+                this.targetNamesField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1586.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -204,11 +281,11 @@ namespace FortisCollections.Toolcore.Publish.Runner.Publishing {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
     public delegate void PublishCompletedEventHandler(object sender, PublishCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class PublishCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -230,11 +307,11 @@ namespace FortisCollections.Toolcore.Publish.Runner.Publishing {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
     public delegate void CheckCompletedEventHandler(object sender, CheckCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CheckCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {

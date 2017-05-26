@@ -10,6 +10,12 @@ namespace FortisCollections.Toolcore.Publish.Runner
 		public string[] TargetDatabaseNames { get; set; }
 		[OptionArray('l', "languageNames")]
 		public string[] LanguageNames { get; set; }
+		[Option('d', "deep")]
+		public bool Deep { get; set; }
+		[Option('p', "publishMode")]
+		public string PublishMode { get; set; }
+		[Option('r', "rootItem")]
+		public string RootItem { get; set; }
 		[Option('u', "sitecoreUrl", Required = true)]
 		public string SitecoreUrl { get; set; }
 		[Option('o', "timeout")]
