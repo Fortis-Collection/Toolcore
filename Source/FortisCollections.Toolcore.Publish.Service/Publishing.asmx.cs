@@ -1,4 +1,5 @@
-﻿using System.Web.Services;
+﻿using System;
+using System.Web.Services;
 
 namespace FortisCollections.Toolcore.Publish.Service
 {
@@ -15,11 +16,33 @@ namespace FortisCollections.Toolcore.Publish.Service
 		/// <param name="languageNames"></param>
 		/// <returns>An ID for checking the progress of the publish</returns>
 		[WebMethod(Description = "Publishes the master database to one or more targets.")]
-		public string Publish(string sourceDatabaseName, string[] targetNames = null, string[] languageNames = null)
+		[Obsolete("Use Publish(PublishOptions)")]
+		public string Publish(
+			string sourceDatabaseName,
+			string[] targetNames = null,
+			string[] languageNames = null)
+		{
+			return Publish(new PublishOptions
+			{
+				SourceDatabaseName = sourceDatabaseName,
+				TargetNames = targetNames,
+				LanguageNames = languageNames
+			});
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sourceDatabaseName"></param>
+		/// <param name="targetNames"></param>
+		/// <param name="languageNames"></param>
+		/// <returns>An ID for checking the progress of the publish</returns>
+		[WebMethod(Description = "Publishes the master database to one or more targets.")]
+		public string Publish(PublishOptions options)
 		{
 			var publisher = new Publisher();
 
-			return publisher.Publish(sourceDatabaseName, targetNames, languageNames);
+			return publisher.Publish(options);
 		}
 
 		[WebMethod(Description = "Checks publish progress for a given ID")]
