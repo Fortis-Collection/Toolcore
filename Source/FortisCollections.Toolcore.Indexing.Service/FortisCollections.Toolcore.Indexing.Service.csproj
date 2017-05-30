@@ -83,6 +83,7 @@
       <DependentUpon>Indexing.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Progress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

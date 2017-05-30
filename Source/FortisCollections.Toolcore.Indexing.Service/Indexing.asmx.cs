@@ -1,5 +1,6 @@
 ﻿using FortisCollections.Toolcore.Tracker;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Services;
 
 namespace FortisCollections.Toolcore.Indexing.Service
@@ -10,27 +11,44 @@ namespace FortisCollections.Toolcore.Indexing.Service
 	public class Indexing : WebService
 	{
 		[WebMethod(Description = "Rebuild all indexes")]
-		public IEnumerable<IProgress> RebuildAll()
+		public List<Progress> RebuildAll()
 		{
-			var indexRebuilder = new IndexRebuilder();
-
-			return indexRebuilder.RebuildAll();
+			var progresses = (new IndexRebuilder()).RebuildAll();
+			
+			return Create(progresses);
 		}
 
 		[WebMethod(Description = "Rebuild specific indexes")]
-		public IEnumerable<IProgress> Rebuild(string[] indexNames)
+		public List<Progress> Rebuild(string[] indexNames)
 		{
-			var indexRebuilder = new IndexRebuilder();
+			var progresses = (new IndexRebuilder()).Rebuild(indexNames);
 
-			return indexRebuilder.Rebuild(indexNames);
+			return Create(progresses);
 		}
 
 		[WebMethod(Description = "Check progress")]
-		public IProgress Check(string id)
+		public Progress Check(string id)
 		{
 			var tracker = new JobTracker();
+			var progress = tracker.Check(id);
 
-			return tracker.Check(id);
+			return Create(progress);
+		}
+
+		private List<Progress> Create(IEnumerable<IProgress> progresses)
+		{
+			return progresses.Select(p => Create(p)).ToList();
+		}
+
+		private Progress Create(IProgress progress)
+		{
+			return new Progress
+			{
+				Complete = progress.Complete,
+				Id = progress.Id,
+				Messages = progress.Messages.ToList(),
+				Processed = progress.Processed
+			};
 		}
 	}
 }
