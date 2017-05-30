@@ -1,4 +1,5 @@
-﻿using Sitecore.ContentSearch;
+﻿using FortisCollections.Toolcore.Tracker;
+using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Maintenance;
 using Sitecore.Jobs;
 using System.Collections.Generic;
@@ -8,14 +9,14 @@ namespace FortisCollections.Toolcore.Indexing
 {
 	public class IndexRebuilder : IIndexRebuilder
 	{
-		public IEnumerable<IIndexProgress> RebuildAll()
+		public IEnumerable<IProgress> RebuildAll()
 		{
 			return IndexCustodian.RebuildAll().Select(j => Create(j)).ToList();
 		}
 
-		public IEnumerable<IIndexProgress> Rebuild(string[] indexNames)
+		public IEnumerable<IProgress> Rebuild(string[] indexNames)
 		{
-			var jobs = new List<IIndexProgress>();
+			var jobs = new List<IProgress>();
 
 			foreach (var index in ContentSearchManager.Indexes.Where(i => indexNames.Contains(i.Name)))
 			{
@@ -25,13 +26,13 @@ namespace FortisCollections.Toolcore.Indexing
 			return jobs;
 		}
 
-		public IIndexProgress Create(Job job)
+		public IProgress Create(Job job)
 		{
-			return new IndexProgress
+			return new Progress
 			{
 				Id = job.Name,
 				Complete = false,
-				Message = $"Rebuilding: {job.DisplayName}",
+				Messages = new string[] { $"Rebuilding: {job.DisplayName}" },
 				Processed = job.Status.Processed
 			};
 		}

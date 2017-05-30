@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using FortisCollections.Toolcore.Tracker;
+using System.Collections.Generic;
 
 namespace FortisCollections.Toolcore.Indexing
 {
 	public interface IIndexRebuilder
 	{
-		IEnumerable<IIndexProgress> Rebuild(string[] indexNames);
-		IEnumerable<IIndexProgress> RebuildAll();
+		IEnumerable<IProgress> Rebuild(string[] indexNames);
+		IEnumerable<IProgress> RebuildAll();
 	}
 }

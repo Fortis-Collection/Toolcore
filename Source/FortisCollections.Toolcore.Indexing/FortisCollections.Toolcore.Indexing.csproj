@@ -49,11 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IIndexRebuilder.cs" />
-    <Compile Include="IIndexProgress.cs" />
     <Compile Include="IIndexRebuildTracker.cs" />
     <Compile Include="IndexRebuildTracker.cs" />
     <Compile Include="IndexRebuilder.cs" />
-    <Compile Include="IndexProgress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
