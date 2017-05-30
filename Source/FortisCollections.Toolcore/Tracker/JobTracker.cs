@@ -11,7 +11,7 @@ namespace FortisCollections.Toolcore.Tracker
 		protected virtual string JobNotFoundMessage => "Unable to find job with ID {0}";
 		protected virtual string NoStatusMessage => "Unable to get status";
 		protected virtual string JobFailedMessage => $"{TrackerName} Failed";
-		protected virtual string JobDoneMessage => "Index Rebuild Complete";
+		protected virtual string JobDoneMessage => $"{TrackerName} Complete";
 		protected virtual string JobProcessedMessage => "Processed: {0}";
 
 		public IEnumerable<IProgress> Check(IEnumerable<string> ids)
@@ -39,7 +39,7 @@ namespace FortisCollections.Toolcore.Tracker
 			{
 				messages.Add(string.Format(JobNotFoundMessage, jobName));
 
-				return new Progress { Complete = true, Messages = messages };
+				return Create(jobName, job, messages);
 			}
 
 			var status = job.Status;
@@ -48,13 +48,8 @@ namespace FortisCollections.Toolcore.Tracker
 			{
 				messages.Add(NoStatusMessage);
 
-				return new Progress { Complete = true, Messages = messages };
+				return Create(jobName, job, messages);
 			}
-
-			var stopped = status.Failed || job.IsDone;
-			var message = string.Empty;
-
-			messages.Add(string.Format(JobProcessedMessage, status.Processed));
 
 			if (status.Failed)
 			{
@@ -64,18 +59,22 @@ namespace FortisCollections.Toolcore.Tracker
 			{
 				messages.Add(string.Format(JobDoneMessage, status.Processed));
 			}
+			else
+			{
+				messages.Add(string.Format(JobProcessedMessage, status.Processed));
+			}
 
-			return new Progress { Complete = stopped, Processed = status.Processed, Messages = messages };
+			return Create(jobName, job, messages);
 		}
 
-		public Progress Create(Job job, bool stopped, IEnumerable<string> messages)
+		public Progress Create(string id, Job job, IEnumerable<string> messages)
 		{
 			return new Progress
 			{
-				Complete = stopped,
-				Id = job.Name,
+				Complete = job == null || job.Status == null ? true : (job.Status.Failed || job.IsDone),
+				Id = job?.Name ?? id,
 				Messages = messages,
-				Processed = job.Status.Processed
+				Processed = job?.Status?.Processed ?? 0
 			};
 		}
 	}

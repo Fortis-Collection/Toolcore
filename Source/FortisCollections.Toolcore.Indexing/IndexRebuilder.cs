@@ -32,7 +32,7 @@ namespace FortisCollections.Toolcore.Indexing
 			{
 				Id = job.Name,
 				Complete = false,
-				Messages = new string[] { $"Rebuilding: {job.DisplayName}" },
+				Messages = new string[] { $"Rebuilding: {job.Name}" },
 				Processed = job.Status.Processed
 			};
 		}

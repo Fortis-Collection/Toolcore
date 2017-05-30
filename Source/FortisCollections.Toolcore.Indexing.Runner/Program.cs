@@ -15,9 +15,9 @@ namespace FortisCollections.Toolcore.Indexing.Runner
 
 		static void Main(string[] args)
 		{
-			WriteMessage("------------------------");
+			WriteMessage("-------------------------");
 			WriteMessage("Toolcore - Indexing (1.0)");
-			WriteMessage("------------------------");
+			WriteMessage("-------------------------");
 
 			var options = new Options();
 			var parser = new Parser(config => config.HelpWriter = Console.Out);
@@ -33,10 +33,10 @@ namespace FortisCollections.Toolcore.Indexing.Runner
 				maxRetries = options.MaxRetries;
 			}
 
-			RunPublish(options);
+			Run(options);
 		}
 
-		static void RunPublish(Options options)
+		static void Run(Options options)
 		{
 			var sitecoreUrl = options.SitecoreUrl;
 			var indexNames = options.IndexNames ?? new string[] { };
@@ -92,33 +92,32 @@ namespace FortisCollections.Toolcore.Indexing.Runner
 					Environment.Exit(103);
 				}
 
-				var ids = progresses.Select(p => p.Id).ToArray();
-				var done = progresses.Any(p => p.Complete);
+				var ids = progresses.Select(p => p.Id).ToList();
 				var previousProgresses = progresses;
 
-				while (!done)
+				while (ids.Any())
 				{
+					WriteMessage("----------------");
+
 					foreach (var progress in progresses)
 					{
 						var previousProgress = previousProgresses.FirstOrDefault(tp => string.Equals(tp.Id, progress.Id));
 
 						foreach(var message in progress.Messages)
 						{
-							WriteMessage(message);
+							WriteMessage($"{progress.Id}: {message}");
 						}
 
-						//if (!message.Equals(status.Message))
-						//{
-						//	message = status.Message;
-
-						//	WriteMessage(status.Message);
-						//}
+						if (progress.Complete)
+						{
+							ids.Remove(progress.Id);
+						}
 					}
 
 					Thread.Sleep(1500);
 
 					previousProgresses = progresses;
-					progresses = indexingService.CheckMultiple(ids);
+					progresses = indexingService.CheckMultiple(ids.ToArray());
 				}
 
 				WriteMessage("Finished");
@@ -127,7 +126,7 @@ namespace FortisCollections.Toolcore.Indexing.Runner
 
 		static void WriteMessage(string format, params object[] args)
 		{
-			Console.Write(string.Format("[{0}] ", DateTime.Now.ToString("hh:mm:ss")));
+			Console.Write(string.Format("[{0}] ", DateTime.Now.ToString("HH:mm:ss")));
 			Console.WriteLine(format, args);
 		}
 	}
