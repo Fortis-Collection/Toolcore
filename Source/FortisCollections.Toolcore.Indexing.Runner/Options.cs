@@ -4,7 +4,7 @@ namespace FortisCollections.Toolcore.Indexing.Runner
 {
 	public class Options
 	{
-		[Option('i', "indexNames")]
+		[OptionArray('i', "indexNames")]
 		public string[] IndexNames { get; set; }
 		[Option('u', "sitecoreUrl", Required = true)]
 		public string SitecoreUrl { get; set; }
