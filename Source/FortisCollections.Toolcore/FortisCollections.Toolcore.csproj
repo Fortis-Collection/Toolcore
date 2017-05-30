@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sitecore.Kernel.NoReferences.8.2.170407\lib\NET452\Sitecore.Kernel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,7 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tracker\IJobTracker.cs" />
+    <Compile Include="Tracker\JobTracker.cs" />
+    <Compile Include="Tracker\IProgress.cs" />
+    <Compile Include="Tracker\Progress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -113,7 +113,7 @@ namespace FortisCollections.Toolcore.Update.Runner
 
 		static void WriteMessage(string format, params object[] args)
 		{
-			Console.Write(string.Format("[{0}] ", DateTime.Now.ToString("hh:mm:ss")));
+			Console.Write(string.Format("[{0}] ", DateTime.Now.ToString("HH:mm:ss")));
 			Console.WriteLine(format, args);
 		}
 	}

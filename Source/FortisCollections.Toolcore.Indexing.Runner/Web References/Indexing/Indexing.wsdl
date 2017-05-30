@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="RebuildAll">
+        <s:complexType />
+      </s:element>
+      <s:element name="RebuildAllResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RebuildAllResult" type="tns:ArrayOfProgress" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfProgress">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Progress" nillable="true" type="tns:Progress" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Progress">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Complete" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="Processed" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Messages" type="tns:ArrayOfString" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Rebuild">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="indexNames" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RebuildResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RebuildResult" type="tns:ArrayOfProgress" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Check">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="id" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckResult" type="tns:Progress" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckMultiple">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ids" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckMultipleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckMultipleResult" type="tns:ArrayOfProgress" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RebuildAllSoapIn">
+    <wsdl:part name="parameters" element="tns:RebuildAll" />
+  </wsdl:message>
+  <wsdl:message name="RebuildAllSoapOut">
+    <wsdl:part name="parameters" element="tns:RebuildAllResponse" />
+  </wsdl:message>
+  <wsdl:message name="RebuildSoapIn">
+    <wsdl:part name="parameters" element="tns:Rebuild" />
+  </wsdl:message>
+  <wsdl:message name="RebuildSoapOut">
+    <wsdl:part name="parameters" element="tns:RebuildResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckSoapIn">
+    <wsdl:part name="parameters" element="tns:Check" />
+  </wsdl:message>
+  <wsdl:message name="CheckSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckMultipleSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckMultiple" />
+  </wsdl:message>
+  <wsdl:message name="CheckMultipleSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckMultipleResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IndexingSoap">
+    <wsdl:operation name="RebuildAll">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Rebuild all indexes</wsdl:documentation>
+      <wsdl:input message="tns:RebuildAllSoapIn" />
+      <wsdl:output message="tns:RebuildAllSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Rebuild">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Rebuild specific indexes</wsdl:documentation>
+      <wsdl:input message="tns:RebuildSoapIn" />
+      <wsdl:output message="tns:RebuildSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Check">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Check progress</wsdl:documentation>
+      <wsdl:input message="tns:CheckSoapIn" />
+      <wsdl:output message="tns:CheckSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckMultiple">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Check progress</wsdl:documentation>
+      <wsdl:input message="tns:CheckMultipleSoapIn" />
+      <wsdl:output message="tns:CheckMultipleSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IndexingSoap" type="tns:IndexingSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RebuildAll">
+      <soap:operation soapAction="http://tempuri.org/RebuildAll" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Rebuild">
+      <soap:operation soapAction="http://tempuri.org/Rebuild" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Check">
+      <soap:operation soapAction="http://tempuri.org/Check" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckMultiple">
+      <soap:operation soapAction="http://tempuri.org/CheckMultiple" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="IndexingSoap12" type="tns:IndexingSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RebuildAll">
+      <soap12:operation soapAction="http://tempuri.org/RebuildAll" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Rebuild">
+      <soap12:operation soapAction="http://tempuri.org/Rebuild" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Check">
+      <soap12:operation soapAction="http://tempuri.org/Check" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckMultiple">
+      <soap12:operation soapAction="http://tempuri.org/CheckMultiple" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Indexing">
+    <wsdl:port name="IndexingSoap" binding="tns:IndexingSoap">
+      <soap:address location="http://scpackageinstaller/Indexing.asmx" />
+    </wsdl:port>
+    <wsdl:port name="IndexingSoap12" binding="tns:IndexingSoap12">
+      <soap12:address location="http://scpackageinstaller/Indexing.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

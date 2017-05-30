@@ -66,6 +66,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Indexing.asmx" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -78,12 +79,21 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Indexing.asmx.cs">
+      <DependentUpon>Indexing.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Progress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FortisCollections.Toolcore.Indexing\FortisCollections.Toolcore.Indexing.csproj">
       <Project>{a6a73e9f-c802-496b-93cc-4109f1947a23}</Project>
       <Name>FortisCollections.Toolcore.Indexing</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FortisCollections.Toolcore\FortisCollections.Toolcore.csproj">
+      <Project>{F086152B-E47B-4F44-943D-BF48C344DE58}</Project>
+      <Name>FortisCollections.Toolcore</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
