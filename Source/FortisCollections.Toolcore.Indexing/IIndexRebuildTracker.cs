@@ -2,8 +2,8 @@
 
 namespace FortisCollections.Toolcore.Indexing
 {
-	public interface IIndexRebuildTracker
+	public interface IIndexRebuildTracker : IJobTracker
 	{
-		IProgress Check(string id);
+
 	}
 }

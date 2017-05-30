@@ -29,8 +29,17 @@ namespace FortisCollections.Toolcore.Indexing.Service
 		[WebMethod(Description = "Check progress")]
 		public Progress Check(string id)
 		{
-			var tracker = new JobTracker();
+			var tracker = new IndexRebuildTracker();
 			var progress = tracker.Check(id);
+
+			return Create(progress);
+		}
+
+		[WebMethod(Description = "Check progress")]
+		public List<Progress> CheckMultiple(string[] ids)
+		{
+			var tracker = new IndexRebuildTracker();
+			var progress = tracker.Check(ids);
 
 			return Create(progress);
 		}

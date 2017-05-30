@@ -1,4 +1,6 @@
-﻿namespace FortisCollections.Toolcore.Indexing
+﻿using FortisCollections.Toolcore.Tracker;
+
+namespace FortisCollections.Toolcore.Indexing
 {
 	public class IndexRebuildTracker : JobTracker, IIndexRebuildTracker
 	{

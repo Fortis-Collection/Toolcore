@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Tracker\IJobTracker.cs" />
     <Compile Include="Tracker\JobTracker.cs" />
     <Compile Include="Tracker\IProgress.cs" />
     <Compile Include="Tracker\Progress.cs" />
