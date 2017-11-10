@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Sitecore.SecurityModel;
 using Sitecore.Update;
 using Sitecore.Update.Installer;
 
@@ -72,7 +73,11 @@ namespace FortisCollections.Toolcore.Update
 				var entries = UpdateHelper.Install(packageInstallationInfo, logger, out historyPath);
 				var installer = new DiffInstaller(packageInstallationInfo.Action);
 
-				installer.ExecutePostInstallationInstructions(packageInstallationInfo.Path, historyPath, packageInstallationInfo.Mode, packageMetaData, logger, ref entries);
+				using (new SecurityDisabler())
+				{
+					installer.ExecutePostInstallationInstructions(packageInstallationInfo.Path, historyPath,
+						packageInstallationInfo.Mode, packageMetaData, logger, ref entries);
+				}
 
 				ActiveTracker.Tracker = null;
 
