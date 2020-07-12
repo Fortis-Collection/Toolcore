@@ -6,8 +6,8 @@ namespace FortisCollections.Toolcore.Publish.Runner
 	{
 		[Option('s', "sourceDatabaseName", Required = true)]
 		public string SourceDatabaseName { get; set; }
-		[OptionArray('t', "targetDatabaseNames")]
-		public string[] TargetDatabaseNames { get; set; }
+		[Option('t', "targetDatabaseNames")]
+		public string TargetDatabaseNames { get; set; }
 		[OptionArray('l', "languageNames")]
 		public string[] LanguageNames { get; set; }
 		[Option('d', "deep")]

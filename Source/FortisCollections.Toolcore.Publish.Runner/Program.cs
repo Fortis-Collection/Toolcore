@@ -39,7 +39,7 @@ namespace FortisCollections.Toolcore.Publish.Runner
 		static void RunPublish(Options options)
 		{
 			var sitecoreUrl = options.SitecoreUrl;
-			var targets = options.TargetDatabaseNames ?? new string[] { };
+			var targets = !string.IsNullOrWhiteSpace(options.TargetDatabaseNames) ? options.TargetDatabaseNames.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries) : new string[] { };
 			var languages = options.LanguageNames ?? new string[] { };
 			var sourceDatabaseName = options.SourceDatabaseName;
 			var deep = options.Deep;
